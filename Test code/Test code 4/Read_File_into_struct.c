@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct DataSet			/* Define a struture called DataSet */
+{
+	int ascii;			/* The X data */
+	int length;
+};
+
 // Main () - execution starts here
 int main (void)
 {
@@ -23,22 +29,13 @@ int main (void)
  
     // Read, line by line the 10 values written into variable d
     // and then display the contents of d on the screen
-    /*for ( i = 1 ; i <= 12 ; i++)
+    for ( i = 1 ; i <= 12 ; i++)
     {
         fscanf (fInput, "%d", &d);
         printf ("Value read from file %d\n",d);
-    }*/
-   fscanf (fInput, "%d", &d);
-   printf ("Value read from file %d\n",d);
-
-   fscanf (fInput, "%d", &d);
-   printf ("Value read from file %d\n",d);
-
-   fscanf (fInput, "%d", &d);
-   printf ("Value read from file %d\n",d);
+    }
 
     // And close the file
     fclose (fInput);
 
     return (0);     // Exit indicating success
-}
