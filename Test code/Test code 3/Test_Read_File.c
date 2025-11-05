@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Main () - execution starts here
+int main (void)
+{
+    // Declare file stream variables
+    FILE *fInput, *fOutput;
+
+    // Other variables needed
+    int i,d;
+
+    // Try and open the binary "numbers " (in the current directory) file for reading
+
+    fInput = fopen ("numbers.txt", "r");
+
+    // Check we were able to open the file
+    if ( fInput == NULL)
+    {
+        printf ("\nthe file could not be opened for reading, exiting");
+        return -1;
+    }
+ 
+    // Read, line by line the 10 values written into variable d
+    // and then display the contents of d on the screen
+    for ( i = 1 ; i <= 12 ; i++)
+    {
+        fscanf (fInput, "%d", &d);
+        printf ("Value read from file %d\n",d);
+    }
+
+    // And close the file
+    fclose (fInput);
+
+    return (0);     // Exit indicating success
+}
