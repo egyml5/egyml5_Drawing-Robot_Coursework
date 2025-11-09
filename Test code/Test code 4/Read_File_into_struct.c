@@ -31,6 +31,20 @@ void displayFunction (struct DataSet character){
    printf("\n\n");
 }
 
+int FontToGCode (struct DataSet character, int *Array){
+    int i;
+    int j=1;
+    for(i=1; i<=character.length; i++){
+        Array[j] = character.Pen[i];
+        j++;
+        Array[j] = character.Xpos[i];
+        j++;
+        Array[j] = character.Ypos[i];
+        j++;
+    }
+    return (0);
+}
+
 // Main () - execution starts here
 int main (void)
 {
@@ -47,6 +61,8 @@ int main (void)
     int i=0;
     int q=0;
     int ii=0;
+    int k;
+    int h;
     int *Xpos;
     int *Ypos;
     int *Pen;
@@ -105,6 +121,19 @@ int main (void)
             printf ("\ntxt file improperly formatted\n\n");
         }
     }
+    struct DataSet character1;
+
+    k = character1.length*3;
+    int Array[k];
+    int retVal;
+
+    retVal = FontToGCode (character1, Array);
+
+    printf("\n\t\tG-Code Array");
+    for(h=1; h<=k; h++){
+        printf("\n\t\t %d",Array[h]);
+    }
+    printf("\n\n");
 
     // And close the file
     fclose (fInput);
