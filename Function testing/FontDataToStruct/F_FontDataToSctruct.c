@@ -7,51 +7,17 @@ int F_FontDataToStruct(char* FontData, Characters **Goeffrey, int *count){
     int check;
     int ascii;
     int length;
-    int ignore;
-    int EndCheck;
-    int NumberOfCharacters = &count;
+    int NumberOfCharacters = *count;
     int i;
     int ii;
-    int end = 0;
     struct Characters *CharacterArray;
     int *Xpos;
     int *Ypos;
     int *Pen;
+    int EndCheck;
 
     FILE *fInput;
-    fInput = fopen (FontData, "r");
-    if ( fInput == NULL)
-    {
-        printf ("\nthe file could not be opened for reading, exiting");
-        return -1;
-    }
-
-    while (end == 0) {
-        EndCheck = fscanf (fInput, "%d %d %d", &check, &ascii, &length);
-
-        printf("check = %d, ascii = %d, length = %d\n",check, ascii, length);
-
-        if (EndCheck == EOF){
-            break;
-        }
-        if (check == 999){
-            count++;
-        }
-
-        for (i=1; i<=length; i++){
-            fscanf (fInput, "%d %d %d", &ignore, &ignore, &ignore);
-
-            if (EndCheck == EOF){
-                break;
-            }
-        }
-        
-    }
-    fclose (fInput);
-
-    printf("count = %d\n",count);
-
-    CharacterArray = calloc ( count , sizeof(struct Characters));
+    CharacterArray = calloc ( NumberOfCharacters , sizeof(struct Characters));
     if ( CharacterArray == NULL){
         printf ("\nMemory could not be allocated - terminating\n");
         return -1;  // Use minus one as we did not exit sucesfully
@@ -64,28 +30,40 @@ int F_FontDataToStruct(char* FontData, Characters **Goeffrey, int *count){
         return -1;
     }
 
-    for (ii=1; ii<=NumberOfCharacters; ii++){
-        fscanf (fInput, "%d %d %d", &check, &ascii, &length);
+    for (ii=0; ii<NumberOfCharacters; ii++){
 
-        CharacterArray[NumberOfCharacters].ascii = ascii;
-        CharacterArray[NumberOfCharacters].length = length;
-
-        Xpos = calloc ( length , sizeof (int));
-        Ypos = calloc ( length , sizeof (int));
-        Pen = calloc ( length , sizeof (int));
-
-        if ( Xpos == NULL || Ypos == NULL || Pen == NULL){
-            printf ("\nMemory could not be allocated - terminating");
-            return -1;  // Use minus one as we did not exit sucesfully
+        EndCheck = fscanf (fInput, "%d %d %d", &check, &ascii, &length);
+        if (EndCheck == EOF){
+            printf("EOF");
+            break;
         }
 
-        for (i=1; i<=length; i++){
-            fscanf (fInput, "%d %d %d", Xpos[i], Ypos[i], Pen[i]);
+        CharacterArray[ii].ascii = ascii;
+        CharacterArray[ii].length = length;
+
+        if (length =! 0){
+            Xpos = calloc ( length , sizeof (int));
+            Ypos = calloc ( length , sizeof (int));
+            Pen = calloc ( length , sizeof (int));
+
+            if ( Xpos == NULL || Ypos == NULL || Pen == NULL){
+                printf ("\nMemory could not be allocated - terminating");
+                return -1;  // Use minus one as we did not exit sucesfully
+            }
+
+            for (i=1; i<=length; i++){
+                fscanf (fInput, "%d %d %d", &Xpos[i], &Ypos[i], &Pen[i]);
+
+                if (EndCheck == EOF){
+                    printf("EOF");
+                    break;
+                }
+            }
         }
 
-        CharacterArray[NumberOfCharacters].Xpos = Xpos;
-        CharacterArray[NumberOfCharacters].Ypos = Ypos;
-        CharacterArray[NumberOfCharacters].Pen = Pen;
+        CharacterArray[ii].Xpos = Xpos;
+        CharacterArray[ii].Ypos = Ypos;
+        CharacterArray[ii].Pen = Pen;
     }
 
     *Goeffrey = CharacterArray;

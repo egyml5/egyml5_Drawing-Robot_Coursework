@@ -34,7 +34,7 @@ int F_CountLetters(char* FontData, int *count){
         }
 
         for (i=1; i<=length; i++){
-            fscanf (fInput, "%d %d %d", &ignore, &ignore, &ignore);
+            EndCheck = fscanf (fInput, "%d %d %d", &ignore, &ignore, &ignore);
 
             if (EndCheck == EOF){
                 break;
@@ -45,5 +45,8 @@ int F_CountLetters(char* FontData, int *count){
     fclose (fInput);
 
     *count = NumberOfCharacters;
+
+    printf("\n\nCount = %d\n\n",*count);
+
     return 0;
 }
