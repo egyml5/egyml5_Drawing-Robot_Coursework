@@ -6,16 +6,20 @@
 
 int main() {
 
-    int *count;
-    int i;
-    int ReturnVal1;
-    int ReturnVal2;
+    int CharacterCount;
+    int WordCount;
+    int i = 0;
+    int ReturnVal1 = 0;
+    int ReturnVal2 = 0;
 
-    ReturnVal1 = F_CountWords("test.txt", &count);
+    ReturnVal1 = F_CountWords("test.txt", &CharacterCount, &WordCount);
 
-    for (i=1;i<=count;i++){
-        ReturnVal2 = F_ReadWordToASCIIArray("test.txt",i);
-    }
+    printf("\n\t\tCharacterCount = %d",CharacterCount);
+    printf("\n\t\tWordCount = %d",WordCount);
+
+    //for (i=1;i<=count;i++){
+    //   ReturnVal2 = F_ReadWordToASCIIArray("test.txt",i);
+    //}
 
     printf("\n\nReturnVal1 = %d, ReturnVal2 = %d\n\n",ReturnVal1,ReturnVal2);
 
