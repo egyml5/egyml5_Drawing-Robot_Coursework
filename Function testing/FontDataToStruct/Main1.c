@@ -2,20 +2,26 @@
 #include <stdlib.h>
 #include "F_FontDataToStruct.h"
 #include "F_CountLetters.h"
+#include "F_DisplayCharacter.h"
 #include "S_Characters.h"
 
-
 int main () {
-    Characters *Goeffrey;
+    Characters *CharacterArray;
     int count;
+    int i;
     int a;
     int b;
+    int c;
     
     a = F_CountLetters("FontData.txt", &count);
 
-    b = F_FontDataToStruct("FontData.txt", &Goeffrey, &count);
+    b = F_FontDataToStruct("FontData.txt", &CharacterArray, &count);
 
-    printf("a = %d, b = %d\n\n",a,b);
+    //for(i=1; i<=count; i++){
+    //    c = F_DisplayCharacter(CharacterArray[i]);
+    //}
+
+    printf("a = %d, b = %d, c = %d\n\n",a,b,c);
 
     return 0;
 }

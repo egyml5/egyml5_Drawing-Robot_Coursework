@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "S_Characters.h"
 
-int F_FontDataToStruct(char* FontData, Characters **Goeffrey, int *count){
+int F_FontDataToStruct(char* FontData, Characters **ReturnArray, int *count){
 
     int check;
     int ascii;
@@ -33,6 +33,7 @@ int F_FontDataToStruct(char* FontData, Characters **Goeffrey, int *count){
     for (ii=0; ii<NumberOfCharacters; ii++){
 
         EndCheck = fscanf (fInput, "%d %d %d", &check, &ascii, &length);
+        
         if (EndCheck == EOF){
             printf("EOF");
             break;
@@ -40,6 +41,10 @@ int F_FontDataToStruct(char* FontData, Characters **Goeffrey, int *count){
 
         CharacterArray[ii].ascii = ascii;
         CharacterArray[ii].length = length;
+
+        char c = CharacterArray[ii].ascii;
+        printf("\n\n\t\t ascii = %c", c);
+        printf("\n\t\t length = %d ",CharacterArray[ii].length);
 
         if (length =! 0){
             Xpos = calloc ( length , sizeof (int));
@@ -61,11 +66,25 @@ int F_FontDataToStruct(char* FontData, Characters **Goeffrey, int *count){
             }
         }
 
+        printf("\n\t\t Xpos =");
+        for(i=1; i<=length; i++){
+            printf(" %d",Xpos[i]);
+        }
+        printf("\n\t\t Ypos =");
+        for(i=1; i<=length; i++){
+            printf(" %d",Ypos[i]);
+        }
+        printf("\n\t\t Pen =");
+        for(i=1; i<=length; i++){
+            printf(" %d",Pen[i]);
+        }
+
+
         CharacterArray[ii].Xpos = Xpos;
         CharacterArray[ii].Ypos = Ypos;
         CharacterArray[ii].Pen = Pen;
     }
 
-    *Goeffrey = CharacterArray;
+    *ReturnArray = CharacterArray;
     return 0;
 }
