@@ -69,7 +69,7 @@ int main (void)
 
     // Try and open the binary "numbers " (in the current directory) file for reading
 
-    fInput = fopen ("FontData.txt", "r");
+    fInput = fopen ("FontDataTest.txt", "r");
 
     // Check we were able to open the file
     if ( fInput == NULL)

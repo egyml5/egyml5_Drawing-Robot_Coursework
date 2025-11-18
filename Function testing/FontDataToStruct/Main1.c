@@ -9,19 +9,19 @@ int main () {
     Characters *CharacterArray;
     int count;
     int i;
-    int a;
-    int b;
-    int c;
+    int ReturnVal1;
+    int ReturnVal2;
+    int ReturnVal3;
     
-    a = F_CountLetters("FontData.txt", &count);
+    ReturnVal1 = F_CountLetters("FontData.txt", &count);
 
-    b = F_FontDataToStruct("FontData.txt", &CharacterArray, &count);
+    ReturnVal2 = F_FontDataToStruct("FontData.txt", &CharacterArray, &count);
 
-    //for(i=1; i<=count; i++){
-    //    c = F_DisplayCharacter(CharacterArray[i]);
-    //}
+    for(i=0; i<count; i++){
+        ReturnVal3 = F_DisplayCharacter(CharacterArray[i]);
+    }
 
-    printf("a = %d, b = %d, c = %d\n\n",a,b,c);
+    printf("\n\nReturnVal1 = %d, ReturnVal2 = %d, ReturnVal3 = %d\n\n",ReturnVal1,ReturnVal2,ReturnVal3);
 
     return 0;
 }
