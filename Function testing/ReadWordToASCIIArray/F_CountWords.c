@@ -11,6 +11,11 @@ int F_CountWords(char* InputText, int *CharacterCount, int *WordCount){
     int PastASCII = -1;
 
     FILE *fptr = fopen(InputText, "r");
+    if ( fptr == NULL){
+        printf ("\n\t\tthe file could not be opened for reading, exiting");
+        fclose(fptr);
+        return -1;
+    }
 
     while (1){
         TempChar = fgetc(fptr);
@@ -34,6 +39,8 @@ int F_CountWords(char* InputText, int *CharacterCount, int *WordCount){
         }
         PastASCII = ASCII;
     }
+
+    fclose(fptr);
     
     *CharacterCount = NumberOfCharacters;
     *WordCount = NumberOfWords;
