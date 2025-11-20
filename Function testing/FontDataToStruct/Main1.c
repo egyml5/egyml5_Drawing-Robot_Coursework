@@ -14,7 +14,7 @@ int main () {
     int ReturnVal2;
     int ReturnVal3;
     int ReturnVal4;
-    int FontSize = 8;
+    int FontSize = 10;
     
     ReturnVal1 = F_CountLetters("FontData.txt", &count);
 

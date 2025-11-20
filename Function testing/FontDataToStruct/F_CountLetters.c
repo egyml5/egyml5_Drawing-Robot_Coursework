@@ -21,10 +21,10 @@ int F_CountLetters(char* FontData, int *count){
         return -1;
     }
 
-    while (end == 0) {
+    while (1) {
         EndCheck = fscanf (fInput, "%d %d %d", &check, &ascii, &length);
 
-        printf("check = %d, ascii = %d, length = %d\n",check, ascii, length);
+        //printf("check = %d, ascii = %d, length = %d\n",check, ascii, length);
 
         if (EndCheck == EOF){
             break;

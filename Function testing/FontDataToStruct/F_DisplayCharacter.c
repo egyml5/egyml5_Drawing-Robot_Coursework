@@ -10,11 +10,11 @@ int F_DisplayCharacter(Characters Character){
 
      printf("\n\t\t Xpos = ");
      for (i=0; i<Character.length; i++){
-        printf(" %d ",Character.Xpos[i]);
+        printf(" %.2f ",Character.Xpos[i]);
      }
      printf("\n\t\t Ypos = ");
      for (i=0; i<Character.length; i++){
-        printf(" %d ",Character.Ypos[i]);
+        printf(" %.2f ",Character.Ypos[i]);
      }
      printf("\n\t\t Pen = ");
      for (i=0; i<Character.length; i++){

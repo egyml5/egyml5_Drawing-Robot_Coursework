@@ -11,11 +11,11 @@ int F_FontDataToStruct(char* FontData, Characters **ReturnArray, int *count){
     int i;
     int ii;
     struct Characters *CharacterArray;
-    int XVal = 0;
-    int YVal = 0;
+    float XVal = 0;
+    float YVal = 0;
     int PenVal = 0;
-    int *Xpos;
-    int *Ypos;
+    float *Xpos;
+    float *Ypos;
     int *Pen;
     int EndCheck;
 
@@ -45,8 +45,8 @@ int F_FontDataToStruct(char* FontData, Characters **ReturnArray, int *count){
         CharacterArray[ii].length = length;
 
         if (length > 0){
-            Xpos = calloc ( length , sizeof (int));
-            Ypos = calloc ( length , sizeof (int));
+            Xpos = calloc ( length , sizeof (float));
+            Ypos = calloc ( length , sizeof (float));
             Pen = calloc ( length , sizeof (int));
 
             if ( Xpos == NULL || Ypos == NULL || Pen == NULL){
@@ -55,7 +55,7 @@ int F_FontDataToStruct(char* FontData, Characters **ReturnArray, int *count){
             }
 
             for (i=0; i<length; i++){
-                fscanf (fInput, "%d %d %d", &XVal, &YVal, &PenVal);
+                fscanf (fInput, "%f %f %d", &XVal, &YVal, &PenVal);
 
                 Xpos[i] = XVal;
                 Ypos[i] = YVal;

@@ -7,8 +7,8 @@ typedef struct Characters
 {
 	int ascii;
 	int length;
-    int *Xpos;
-    int *Ypos;
+    float *Xpos;
+    float *Ypos;
     int *Pen;
 } Characters;
 
