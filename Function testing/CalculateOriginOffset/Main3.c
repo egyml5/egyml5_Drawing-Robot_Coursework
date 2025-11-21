@@ -7,45 +7,54 @@ int main () {
 
     int WordArray1[3] = {84, 104, 101};
     int WordArray2[6] = {32, 113, 117, 105, 99, 107};
-    int WordArray5[7] = {10, 106, 117, 109, 112, 101, 100};
+    int WordArray5[7] = {10, 10, 10, 106, 117, 109, 112, 101, 100, 100, 100, 100};
 
     int LengthOfArray1 = 3;
     int LengthOfArray2 = 6;
-    int LengthOfArray5 = 7;
+    int LengthOfArray5 = 12;
 
     int FontSize = 5;
-    int OldOriginXY[2] = {80, -FontSize};
-    int NewX;
+    int OldWordEndXY[2] = {0, -FontSize};
+    int NewWordStartXY[2];
     int NewY;
-    int PageWidth = 100;
+    int PageWidth = 30;
     int LineGap = 5;
     int i;
+    int k = 1;
+    int NewLineCount;
 
     int *LetterOriginArray[2] = {0};
 
     int ReturnVal1 = 0;
     int ReturnVal2 = 0;
 
-    ReturnVal1 = F_FindWordOrigin(PageWidth, LineGap, OldOriginXY, WordArray1, LengthOfArray1, FontSize, &NewX, &NewY);
+    printf("\n\t\tOld Word End XY = %d %d\n",OldWordEndXY[0],OldWordEndXY[1]);
 
-    printf("\n\t\tNew Word Origin XY = %d %d\n",NewX,NewY);
+    ReturnVal1 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray5, LengthOfArray5, FontSize, NewWordStartXY, &NewLineCount);
 
-    LetterOriginArray[0] = calloc ( LengthOfArray1, sizeof(int));
+    printf("\n\t\tNew Word Origin XY = %d %d\n",NewWordStartXY[0],NewWordStartXY[1]);
+    printf("\n\t\tNewLineCount = %d\n",NewLineCount);
+
+    LengthOfArray5 = LengthOfArray5-NewLineCount;
+
+    LetterOriginArray[0] = calloc ( LengthOfArray5, sizeof(int));
     if ( LetterOriginArray[0] == NULL){
         printf ("\nMemory could not be allocated - terminating\n");
         return -1;
     }
-    LetterOriginArray[1] = calloc ( LengthOfArray1, sizeof(int));
+    LetterOriginArray[1] = calloc ( LengthOfArray5, sizeof(int));
     if ( LetterOriginArray[1] == NULL){
         printf ("\nMemory could not be allocated - terminating\n");
         return -1;
     }
 
-    ReturnVal2 = F_FindLetterOrigin(WordArray1, LengthOfArray1, FontSize, NewX, NewY, LetterOriginArray);
+    ReturnVal2 = F_FindLetterOrigin(PageWidth, LineGap, WordArray5, LengthOfArray5, FontSize, NewWordStartXY, LetterOriginArray);
 
-    //for (i=0; i<LengthOfArray1; i++){
-    //    printf("\n\t\tLetter %d XY =  %d %d",(i+1),LetterOriginArray[0][i],LetterOriginArray[1][i]);
-    //}
+    k = 1+NewLineCount;
+
+    for (i=0; i<LengthOfArray5; i++){
+        printf("\n\t\tLetter %d XY =  %d %d",(i+k),LetterOriginArray[0][i],LetterOriginArray[1][i]);
+    }
 
     printf("\n\n\t\tReturnVal1 = %d, ReturnVal2 = %d\n\n",ReturnVal1,ReturnVal2);
 
