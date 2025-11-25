@@ -32,16 +32,16 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
 
     if(NewLineCount == 0){
         LengthCheck = (FontSize*LengthWordArray)+OldX;
-        printf("\n\t\tLengthCheck = %d",LengthCheck);
+        //printf("\n\t\tLengthCheck = %d",LengthCheck);
 
         if (LengthCheck>100){
-            printf("\n\t\tSending to new line");
+            //printf("\n\t\tSending to new line");
             NewOriginXY[0] = 0;
             NewOriginXY[1] = OldY-FontSize-LineGap;
         }
 
         if (LengthCheck<=100){
-            printf("\n\t\tNot sending to new line");
+            //printf("\n\t\tNot sending to new line");
             NewOriginXY[0] = OldX;
             NewOriginXY[1] = OldY;
         }

@@ -80,7 +80,7 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
                 JaggedLength[RowNumber] = 7;
                 GCodeArray[RowNumber] = calloc(7, sizeof(char));
                 strcpy(GCodeArray[RowNumber], "S1000\n");
-                printf("\t\t\t%s",GCodeArray[RowNumber]);
+                printf("%s",GCodeArray[RowNumber]);
                 RowNumber++;
             }
 
@@ -89,7 +89,7 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
                 JaggedLength[RowNumber] = 4;
                 GCodeArray[RowNumber] = calloc(4, sizeof(char));
                 strcpy(GCodeArray[RowNumber], "S0\n");
-                printf("\t\t\t%s",GCodeArray[RowNumber]);
+                printf("%s",GCodeArray[RowNumber]);
                 RowNumber++;
             }
 
@@ -105,8 +105,8 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
             Pen = PenArray[q];
 
             GCodeArray[RowNumber] = calloc(30, sizeof(char));
-            snprintf(GCodeArray[RowNumber], 30, "G%d X%.5f Y%.5f\n",Pen,XPos,YPos);
-            printf("\t\t\t%s",GCodeArray[RowNumber]);
+            snprintf(GCodeArray[RowNumber], 30, "G%d X%.2f Y%.2f\n",Pen,XPos,YPos);
+            printf("%s",GCodeArray[RowNumber]);
 
             RowNumber++;
             OldPen = PenArray[q];
