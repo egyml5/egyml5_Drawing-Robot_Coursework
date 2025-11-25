@@ -4,6 +4,10 @@
 //#include <windows.h>
 #include "rs232.h"
 #include "serial.h"
+#include "F_CountLetters.h"
+#include "S_Characters.h"
+#include "F_FontDataToStruct.h"
+#include "F_ResizeStructs.h"
 
 #define bdrate 115200               /* 115200 baud */
 
@@ -44,6 +48,22 @@ int main()
     sprintf (buffer, "S0\n");
     SendCommands(buffer);
 
+    Characters *CharacterArray;
+    int count;
+    int i;
+    int ReturnVal1;
+    int ReturnVal2;
+    int ReturnVal3;
+    int ReturnVal4;
+    int FontSize = 10;
+
+    ReturnVal1 = F_CountLetters("FontData.txt", &count);
+
+    ReturnVal2 = F_FontDataToStruct("FontData.txt", &CharacterArray, &count);
+
+    for(i=0; i<count; i++){
+        ReturnVal3 = F_ResizeStructs(FontSize, CharacterArray[i]);
+    }
 
     // These are sample commands to draw out some information - these are the ones you will be generating.
     sprintf (buffer, "G0 X-13.41849 Y0.000\n");
