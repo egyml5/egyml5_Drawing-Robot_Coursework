@@ -4,6 +4,7 @@
 #include "F_CalculateOriginOffset.h"
 #include "S_Characters.h"
 #include "F_ReadWordToASCIIArray.h"
+#include "F_WriteWordToGCodeArray.h"
 
 int main () {
     
@@ -32,6 +33,7 @@ int main () {
     int ReturnVal7;
     int ReturnVal8;
     int ReturnVal9;
+    int ReturnVal10;
     
     //Code to read, convert and store input text and font in a usable format
     ReturnVal1 = F_CountLetters("FontData.txt", &NumberOfASCIICharacters);
@@ -45,7 +47,7 @@ int main () {
     for(i=0; i<NumberOfASCIICharacters; i++){
         ReturnVal4 = F_DisplayCharacter(CharacterArray[i]);
     }
-
+    
     ReturnVal5 = F_CountWords("test.txt", &CharacterCount, &WordCount);
 
     //loop to read each word and convert to GCode
@@ -58,6 +60,7 @@ int main () {
     int NewLineCount;
     int LengthOfWord;
     int *LetterOriginArray[2] = {0};
+    int GCodeArrayLength;
 
     //Loop loop variables
     int q;
@@ -94,10 +97,15 @@ int main () {
         printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCount+1),LetterOriginArray[0][q],LetterOriginArray[1][q]);
         }
 
-        printf("\n");
-
         OldWordEndXY[0] = LetterOriginArray[0][LengthOfWord-1]+FontSize;
         OldWordEndXY[1] = LetterOriginArray[1][LengthOfWord-1];
+
+        ReturnVal10 = F_FindLengthGCodeArray(WordArray, &GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount);
+        printf("\n\t\tGCodeArray length = %d",GCodeArrayLength);
+
+        printf("\n");
+
+        
 
     }
 
