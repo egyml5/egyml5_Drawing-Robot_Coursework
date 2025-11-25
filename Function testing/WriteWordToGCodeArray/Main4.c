@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "F_FontDataToStruct.h"
 #include "F_CalculateOriginOffset.h"
 #include "S_Characters.h"
@@ -9,7 +10,7 @@
 int main () {
     
     //Input values
-    int FontSize = 5;
+    int FontSize = 7;
     int PageWidth = 100;
     int LineGap = 5;
     
@@ -34,6 +35,7 @@ int main () {
     int ReturnVal8;
     int ReturnVal9;
     int ReturnVal10;
+    int ReturnVal11;
     
     //Code to read, convert and store input text and font in a usable format
     ReturnVal1 = F_CountLetters("FontData.txt", &NumberOfASCIICharacters);
@@ -61,9 +63,11 @@ int main () {
     int LengthOfWord;
     int *LetterOriginArray[2] = {0};
     int GCodeArrayLength;
+    char *GCodeArray;
 
     //Loop loop variables
     int q;
+    int z;
 
     for (k=1;k<=WordCount;k++){
 
@@ -87,6 +91,7 @@ int main () {
 
         ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray);
 
+        /*
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
         printf("\n\t\tNewLineCount = %d",NewLineCount);
         printf("\n\t\tWordArray =");
@@ -96,17 +101,17 @@ int main () {
         for (q=0; q<LengthOfWord; q++){
         printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCount+1),LetterOriginArray[0][q],LetterOriginArray[1][q]);
         }
+        */
 
         OldWordEndXY[0] = LetterOriginArray[0][LengthOfWord-1]+FontSize;
         OldWordEndXY[1] = LetterOriginArray[1][LengthOfWord-1];
 
         ReturnVal10 = F_FindLengthGCodeArray(WordArray, &GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount);
-        printf("\n\t\tGCodeArray length = %d",GCodeArrayLength);
+        //printf("\n\t\tGCodeArray length = %d\n",GCodeArrayLength);
+
+        ReturnVal11 = F_WriteGCodeWordArray(WordArray, LetterOriginArray, GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount, GCodeArray);
 
         printf("\n");
-
-        
-
     }
 
     printf("\n\nRV1 = %d, RV2 = %d, RV3 = %d, RV4 = %d, RV5 = %d, RV6 = %d, RV7 = %d, RV8 = %d, RV9 = %d\n\n",ReturnVal1,ReturnVal2,ReturnVal3,ReturnVal4,ReturnVal5,ReturnVal6,ReturnVal7,ReturnVal8,ReturnVal9);
