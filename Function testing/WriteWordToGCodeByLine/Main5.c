@@ -69,7 +69,8 @@ int main () {
     int WordCharacterCount;
     int OldWordEndXY[2] = {0, -FontSize};
     int NewWordStartXY[2];
-    int NewLineCount;
+    int NewLineCountIn;
+    int NewLineCountOut;
     int LengthOfWord;
     int *LetterOriginArray[2] = {0};
     int GCodeArrayLength;
@@ -95,9 +96,9 @@ int main () {
 
         ReturnVal7 = F_ReadWordToASCIIArray("test.txt", k, &WordArray, SkipCount, &WordCharacterCount);
 
-        ReturnVal8 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray, WordCharacterCount, FontSize, NewWordStartXY, &NewLineCount);
+        ReturnVal8 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray, WordCharacterCount, FontSize, NewWordStartXY, &NewLineCountIn, &NewLineCountOut);
 
-        LengthOfWord = WordCharacterCount-NewLineCount;
+        LengthOfWord = WordCharacterCount-NewLineCountIn;
         LetterOriginArray[0] = calloc ( LengthOfWord, sizeof(int));
         if ( LetterOriginArray[0] == NULL){
             printf ("\nMemory could not be allocated - terminating\n");
@@ -109,17 +110,18 @@ int main () {
             return -1;
         }
 
-        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray);
+        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut);
 
         /*
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
-        printf("\n\t\tNewLineCount = %d",NewLineCount);
+        printf("\n\t\tNewLineCountIn = %d",NewLineCountIn);
+        printf("\n\t\tNewLineCountOut = %d",NewLineCountOut);
         printf("\n\t\tWordArray =");
         for (q=0;q<WordCharacterCount;q++){
             printf(" %d",WordArray[q]);
         }
         for (q=0; q<LengthOfWord; q++){
-        printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCount+1),LetterOriginArray[0][q],LetterOriginArray[1][q]);
+        printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCountIn+1),LetterOriginArray[0][q],LetterOriginArray[1][q]);
         }
         printf("\n");
         */
@@ -129,7 +131,7 @@ int main () {
         
         OldPen = 0;
 
-        for (i=NewLineCount;i<WordCharacterCount;i++){
+        for (i=NewLineCountIn;i<WordCharacterCount;i++){
 
             LetterASCII = WordArray[i];
 

@@ -7,7 +7,6 @@
 #include "F_FontDataToStruct.h"
 #include "S_Characters.h"
 #include "F_ReadWordToASCIIArray.h"
-#include "F_WriteWordToGCodeArray.h"
 
 #define bdrate 115200               /* 115200 baud */
 
@@ -48,8 +47,8 @@ int main()
     sprintf (buffer, "S0\n");
     SendCommands(buffer);
 
-    //Input values
-    int FontSize = 7;
+//Input values
+    int FontSize;
     int PageWidth = 100;
     int LineGap = 5;
     
@@ -64,17 +63,27 @@ int main()
     int k;
 
     //Return Values
-    int ReturnVal1;
-    int ReturnVal2;
-    int ReturnVal3;
-    int ReturnVal4;
-    int ReturnVal5;
-    int ReturnVal6;
-    int ReturnVal7;
-    int ReturnVal8;
-    int ReturnVal9;
-    int ReturnVal10;
-    int ReturnVal11;
+    int ReturnVal1 = 0;
+    int ReturnVal2 = 0;
+    int ReturnVal3 = 0;
+    int ReturnVal4 = 0;
+    int ReturnVal5 = 0;
+    int ReturnVal6 = 0;
+    int ReturnVal7 = 0;
+    int ReturnVal8 = 0;
+    int ReturnVal9 = 0;
+
+    while (1){
+        printf ("Please enter a fontsize between 4 and 10\n");
+        scanf ("%d",&FontSize);
+
+        if (FontSize<=10 && FontSize>=4){
+            break;
+        }
+        printf ("Fontsize outside permissable range, Please enter a different value\n");
+    }
+
+    printf ("The value you entered for a is %d\n", FontSize);
     
     //Code to read, convert and store input text and font in a usable format
     ReturnVal1 = F_CountLetters("FontData.txt", &NumberOfASCIICharacters);
@@ -85,9 +94,11 @@ int main()
         ReturnVal3 = F_ResizeStructs(FontSize, CharacterArray[i]);
     }
 
+    /*
     for(i=0; i<NumberOfASCIICharacters; i++){
         ReturnVal4 = F_DisplayCharacter(CharacterArray[i]);
     }
+    */
     
     ReturnVal5 = F_CountWords("test.txt", &CharacterCount, &WordCount);
 
@@ -98,11 +109,21 @@ int main()
     int WordCharacterCount;
     int OldWordEndXY[2] = {0, -FontSize};
     int NewWordStartXY[2];
-    int NewLineCount;
+    int NewLineCountIn;
+    int NewLineCountOut;
     int LengthOfWord;
     int *LetterOriginArray[2] = {0};
     int GCodeArrayLength;
     char *GCodeArray;
+    int OldPen = 0;
+    float *XArray;
+    float *YArray;
+    int *PenArray;
+    int LetterASCII;
+    int LetterLength;
+    float XPos;
+    float YPos;
+    int Pen;
 
     //Loop loop variables
     int q;
@@ -115,9 +136,9 @@ int main()
 
         ReturnVal7 = F_ReadWordToASCIIArray("test.txt", k, &WordArray, SkipCount, &WordCharacterCount);
 
-        ReturnVal8 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray, WordCharacterCount, FontSize, NewWordStartXY, &NewLineCount);
+        ReturnVal8 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray, WordCharacterCount, FontSize, NewWordStartXY, &NewLineCountIn, &NewLineCountOut);
 
-        LengthOfWord = WordCharacterCount-NewLineCount;
+        LengthOfWord = WordCharacterCount-NewLineCountIn;
         LetterOriginArray[0] = calloc ( LengthOfWord, sizeof(int));
         if ( LetterOriginArray[0] == NULL){
             printf ("\nMemory could not be allocated - terminating\n");
@@ -129,19 +150,65 @@ int main()
             return -1;
         }
 
-        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray);
+        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut);
+
+        /*
+        printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
+        printf("\n\t\tNewLineCountIn = %d",NewLineCountIn);
+        printf("\n\t\tNewLineCountOut = %d",NewLineCountOut);
+        printf("\n\t\tWordArray =");
+        for (q=0;q<WordCharacterCount;q++){
+            printf(" %d",WordArray[q]);
+        }
+        for (q=0; q<LengthOfWord; q++){
+        printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCountIn+1),LetterOriginArray[0][q],LetterOriginArray[1][q]);
+        }
+        printf("\n");
+        */
 
         OldWordEndXY[0] = LetterOriginArray[0][LengthOfWord-1]+FontSize;
         OldWordEndXY[1] = LetterOriginArray[1][LengthOfWord-1];
-
-        ReturnVal10 = F_FindLengthGCodeArray(WordArray, &GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount);
-        //printf("\n\t\tGCodeArray length = %d\n",GCodeArrayLength);
-
-        ReturnVal11 = F_WriteGCodeWordArray(WordArray, LetterOriginArray, GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount, GCodeArray);
         
-    }
+        OldPen = 0;
 
-    printf("\n\nRV1 = %d, RV2 = %d, RV3 = %d, RV4 = %d, RV5 = %d, RV6 = %d, RV7 = %d, RV8 = %d, RV9 = %d\n\n",ReturnVal1,ReturnVal2,ReturnVal3,ReturnVal4,ReturnVal5,ReturnVal6,ReturnVal7,ReturnVal8,ReturnVal9);
+        for (i=NewLineCountIn;i<WordCharacterCount;i++){
+
+            LetterASCII = WordArray[i];
+
+            LetterLength = CharacterArray[LetterASCII].length;
+            XArray = CharacterArray[LetterASCII].Xpos;
+            YArray = CharacterArray[LetterASCII].Ypos;
+            PenArray = CharacterArray[LetterASCII].Pen;
+
+            // finds the length of each element of the jagged GCode array
+            for(q=0;q<LetterLength;q++){
+                if(PenArray[q] > OldPen){
+                    //printf("S1000\n");
+                    sprintf (buffer, "S1000\n");
+                    SendCommands(buffer);
+                }
+
+                if(PenArray[q] < OldPen){
+                    //printf("S0\n");
+                    sprintf (buffer, "S0\n");
+                    SendCommands(buffer);
+                }
+
+                //G X Y \n
+                XPos = XArray[q] + LetterOriginArray[0][i];
+                YPos = YArray[q] + LetterOriginArray[1][i];
+                Pen = PenArray[q];
+
+                //printf("G%d X%.2f Y%.2f\n",Pen,XPos,YPos);
+                sprintf (buffer, "G%d X%.2f Y%.2f\n",Pen,XPos,YPos);
+                SendCommands(buffer);
+
+                OldPen = PenArray[q];
+            }
+
+        }
+
+    }
 
     // Before we exit the program we need to close the COM port
     CloseRS232Port();
