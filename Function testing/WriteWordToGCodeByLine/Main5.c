@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "F_FontDataToStruct.h"
-#include "F_CalculateOriginOffset.h"
 #include "S_Characters.h"
 #include "F_ReadWordToASCIIArray.h"
-#include "F_WriteWordToGCodeArray.h"
 
 int main () {
     
@@ -25,17 +23,15 @@ int main () {
     int k;
 
     //Return Values
-    int ReturnVal1;
-    int ReturnVal2;
-    int ReturnVal3;
-    int ReturnVal4;
-    int ReturnVal5;
-    int ReturnVal6;
-    int ReturnVal7;
-    int ReturnVal8;
-    int ReturnVal9;
-    int ReturnVal10;
-    int ReturnVal11;
+    int ReturnVal1 = 0;
+    int ReturnVal2 = 0;
+    int ReturnVal3 = 0;
+    int ReturnVal4 = 0;
+    int ReturnVal5 = 0;
+    int ReturnVal6 = 0;
+    int ReturnVal7 = 0;
+    int ReturnVal8 = 0;
+    int ReturnVal9 = 0;
     
     //Code to read, convert and store input text and font in a usable format
     ReturnVal1 = F_CountLetters("FontData.txt", &NumberOfASCIICharacters);
@@ -46,9 +42,11 @@ int main () {
         ReturnVal3 = F_ResizeStructs(FontSize, CharacterArray[i]);
     }
 
+    /*
     for(i=0; i<NumberOfASCIICharacters; i++){
         ReturnVal4 = F_DisplayCharacter(CharacterArray[i]);
     }
+    */
     
     ReturnVal5 = F_CountWords("test.txt", &CharacterCount, &WordCount);
 
@@ -64,6 +62,15 @@ int main () {
     int *LetterOriginArray[2] = {0};
     int GCodeArrayLength;
     char *GCodeArray;
+    int OldPen = 0;
+    float *XArray;
+    float *YArray;
+    int *PenArray;
+    int LetterASCII;
+    int LetterLength;
+    float XPos;
+    float YPos;
+    int Pen;
 
     //Loop loop variables
     int q;
@@ -92,7 +99,7 @@ int main () {
 
         ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray);
 
-        
+        /*
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
         printf("\n\t\tNewLineCount = %d",NewLineCount);
         printf("\n\t\tWordArray =");
@@ -102,16 +109,45 @@ int main () {
         for (q=0; q<LengthOfWord; q++){
         printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCount+1),LetterOriginArray[0][q],LetterOriginArray[1][q]);
         }
-        
+        printf("\n");
+        */
 
         OldWordEndXY[0] = LetterOriginArray[0][LengthOfWord-1]+FontSize;
         OldWordEndXY[1] = LetterOriginArray[1][LengthOfWord-1];
-
-        ReturnVal10 = F_FindLengthGCodeArray(WordArray, &GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount);
-        //printf("\n\t\tGCodeArray length = %d\n",GCodeArrayLength);
-
-        ReturnVal11 = F_WriteGCodeWordArray(WordArray, LetterOriginArray, GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount, GCodeArray);
         
+        OldPen = 0;
+
+        for (i=NewLineCount;i<WordCharacterCount;i++){
+
+            LetterASCII = WordArray[i];
+
+            LetterLength = CharacterArray[LetterASCII].length;
+            XArray = CharacterArray[LetterASCII].Xpos;
+            YArray = CharacterArray[LetterASCII].Ypos;
+            PenArray = CharacterArray[LetterASCII].Pen;
+
+            // finds the length of each element of the jagged GCode array
+            for(q=0;q<LetterLength;q++){
+                if(PenArray[q] > OldPen){
+                    printf("S1000\n");
+                }
+
+                if(PenArray[q] < OldPen){
+                    printf("S0\n");
+                }
+
+                //G X Y \n
+                XPos = XArray[q] + LetterOriginArray[0][i];
+                YPos = YArray[q] + LetterOriginArray[1][i];
+                Pen = PenArray[q];
+
+                printf("G%d X%.2f Y%.2f\n",Pen,XPos,YPos);
+
+                OldPen = PenArray[q];
+            }
+
+        }
+
     }
 
     printf("\n\nRV1 = %d, RV2 = %d, RV3 = %d, RV4 = %d, RV5 = %d, RV6 = %d, RV7 = %d, RV8 = %d, RV9 = %d\n\n",ReturnVal1,ReturnVal2,ReturnVal3,ReturnVal4,ReturnVal5,ReturnVal6,ReturnVal7,ReturnVal8,ReturnVal9);

@@ -56,6 +56,8 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
     char YString[9];
     char PenString[1];
 
+    char buffer[100];
+
     // makes an array the length of GCodeArrayLength with each element a pointer
     char **GCodeArray = calloc(GCodeArrayLength, sizeof(char*));
     if(GCodeArray == NULL){
@@ -81,6 +83,10 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
                 GCodeArray[RowNumber] = calloc(7, sizeof(char));
                 strcpy(GCodeArray[RowNumber], "S1000\n");
                 printf("%s",GCodeArray[RowNumber]);
+
+                sprintf (buffer, GCodeArray[RowNumber]);
+                SendCommands(buffer);
+
                 RowNumber++;
             }
 
@@ -90,6 +96,10 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
                 GCodeArray[RowNumber] = calloc(4, sizeof(char));
                 strcpy(GCodeArray[RowNumber], "S0\n");
                 printf("%s",GCodeArray[RowNumber]);
+
+                sprintf (buffer, GCodeArray[RowNumber]);
+                SendCommands(buffer);
+
                 RowNumber++;
             }
 
@@ -107,6 +117,9 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
             GCodeArray[RowNumber] = calloc(30, sizeof(char));
             snprintf(GCodeArray[RowNumber], 30, "G%d X%.2f Y%.2f\n",Pen,XPos,YPos);
             printf("%s",GCodeArray[RowNumber]);
+
+            sprintf (buffer, GCodeArray[RowNumber]);
+            SendCommands(buffer);
 
             RowNumber++;
             OldPen = PenArray[q];
