@@ -48,7 +48,7 @@ int F_CountLetters(char* FontData, int *count){
 
     *count = NumberOfCharacters;
 
-    printf("\n\nCount = %d\n\n",*count);
+    //printf("\n\nCount = %d\n\n",*count);
 
     return 0;
 }

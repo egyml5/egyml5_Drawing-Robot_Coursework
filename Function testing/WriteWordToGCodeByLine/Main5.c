@@ -8,7 +8,7 @@
 int main () {
     
     //Input values
-    int FontSize = 7;
+    int FontSize;
     int PageWidth = 100;
     int LineGap = 5;
     
@@ -32,6 +32,18 @@ int main () {
     int ReturnVal7 = 0;
     int ReturnVal8 = 0;
     int ReturnVal9 = 0;
+
+    while (1){
+        printf ("Please enter a fontsize between 4 and 10\n");
+        scanf ("%d",&FontSize);
+
+        if (FontSize<=10 && FontSize>=4){
+            break;
+        }
+        printf ("Fontsize outside permissable range, Please enter a different value\n");
+    }
+
+    printf ("The value you entered for a is %d\n", FontSize);
     
     //Code to read, convert and store input text and font in a usable format
     ReturnVal1 = F_CountLetters("FontData.txt", &NumberOfASCIICharacters);
