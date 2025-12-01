@@ -68,6 +68,7 @@ int main () {
     //Loop loop variables
     int q;
     int z;
+    int v;
 
     for (k=1;k<=WordCount;k++){
 
@@ -110,8 +111,13 @@ int main () {
         //printf("\n\t\tGCodeArray length = %d\n",GCodeArrayLength);
 
         ReturnVal11 = F_WriteGCodeWordArray(WordArray, LetterOriginArray, GCodeArrayLength, CharacterArray, WordCharacterCount, NewLineCount, GCodeArray);
+        
+        printf("%s",GCodeArray[1]);
+        printf("%s",GCodeArray[2]);
+        printf("%s",GCodeArray[3]);
+        printf("%s",GCodeArray[4]);
 
-        //printf("\n");
+        
     }
 
     printf("\n\nRV1 = %d, RV2 = %d, RV3 = %d, RV4 = %d, RV5 = %d, RV6 = %d, RV7 = %d, RV8 = %d, RV9 = %d\n\n",ReturnVal1,ReturnVal2,ReturnVal3,ReturnVal4,ReturnVal5,ReturnVal6,ReturnVal7,ReturnVal8,ReturnVal9);

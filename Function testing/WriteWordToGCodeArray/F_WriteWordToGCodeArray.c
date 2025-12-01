@@ -113,6 +113,7 @@ int F_WriteGCodeWordArray(int *WordArray, int **LetterOriginArray, int GCodeArra
         }
 
     }
+    ptrGCodeArray = *GCodeArray;
 
     return 0;
 }
