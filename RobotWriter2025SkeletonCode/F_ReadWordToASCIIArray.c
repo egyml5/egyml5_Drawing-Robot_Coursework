@@ -250,7 +250,7 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
     return 0;
 }
 
-int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfArray, int FontSize, int* NewWordStartXY, int *LetterOriginArray[], int NewLineCountOut){
+int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfArray, int FontSize, int* NewWordStartXY, int *LetterOriginArray[], int NewLineCountOut, int NewLineCountIn){
 
     int i;
     int k;
@@ -263,6 +263,25 @@ int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfA
         for(k=0; k<LengthOfArray; k++){
             if (WordArray[k] == 32){
                 SpacesCount++;
+            }
+        }
+    }
+
+    if (NewLineCountIn>0){
+        for (k=SpacesCount; k<LengthOfArray; k++){
+            LetterOriginArray[0][k-1] = LetterStartX;
+            LetterOriginArray[1][k-1] = LetterStartY;
+
+            OverspillCheck = LetterStartX+FontSize;
+
+            if (OverspillCheck>=PageWidth){
+                LetterStartX = 0;
+                LetterStartY = LetterStartY-FontSize-LineGap;
+            }
+
+            if (OverspillCheck<PageWidth){
+                LetterStartX = LetterStartX+FontSize;
+                LetterStartY = LetterStartY;
             }
         }
     }

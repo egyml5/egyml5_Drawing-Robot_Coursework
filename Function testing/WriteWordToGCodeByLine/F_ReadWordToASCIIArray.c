@@ -213,7 +213,7 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
 
     //printf("\n\t\tNewLineCount = %d",NewLineCount);
 
-    LengthWordArray = LengthWordArray-NewLineCountIn;
+    //LengthWordArray = LengthWordArray-NewLineCountIn;
     
     if(NewLineCountIn>0){
         //printf("\n\t\tSending to new line");
@@ -250,7 +250,7 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
     return 0;
 }
 
-int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfArray, int FontSize, int* NewWordStartXY, int *LetterOriginArray[], int NewLineCountOut){
+int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfArray, int FontSize, int* NewWordStartXY, int *LetterOriginArray[], int NewLineCountOut, int NewLineCountIn){
 
     int i;
     int k;
@@ -259,7 +259,7 @@ int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfA
     int LetterStartX = NewWordStartXY[0];
     int LetterStartY = NewWordStartXY[1];
 
-    if (NewLineCountOut>0){
+        if (NewLineCountOut>0){
         for(k=0; k<LengthOfArray; k++){
             if (WordArray[k] == 32){
                 SpacesCount++;
@@ -267,22 +267,42 @@ int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfA
         }
     }
 
-    for (k=SpacesCount; k<LengthOfArray; k++){
-        LetterOriginArray[0][k] = LetterStartX;
-        LetterOriginArray[1][k] = LetterStartY;
+    if (NewLineCountIn>0){
+        for (k=SpacesCount; k<LengthOfArray; k++){
+            LetterOriginArray[0][k-1] = LetterStartX;
+            LetterOriginArray[1][k-1] = LetterStartY;
 
-        OverspillCheck = LetterStartX+FontSize;
+            OverspillCheck = LetterStartX+FontSize;
 
-        if (OverspillCheck>=PageWidth){
-            LetterStartX = 0;
-            LetterStartY = LetterStartY-FontSize-LineGap;
-        }
+            if (OverspillCheck>=PageWidth){
+                LetterStartX = 0;
+                LetterStartY = LetterStartY-FontSize-LineGap;
+            }
 
-        if (OverspillCheck<PageWidth){
-            LetterStartX = LetterStartX+FontSize;
-            LetterStartY = LetterStartY;
+            if (OverspillCheck<PageWidth){
+                LetterStartX = LetterStartX+FontSize;
+                LetterStartY = LetterStartY;
+            }
         }
     }
+
+
+        for (k=SpacesCount; k<LengthOfArray; k++){
+            LetterOriginArray[0][k] = LetterStartX;
+            LetterOriginArray[1][k] = LetterStartY;
+
+            OverspillCheck = LetterStartX+FontSize;
+
+            if (OverspillCheck>=PageWidth){
+                LetterStartX = 0;
+                LetterStartY = LetterStartY-FontSize-LineGap;
+            }
+
+            if (OverspillCheck<PageWidth){
+                LetterStartX = LetterStartX+FontSize;
+                LetterStartY = LetterStartY;
+            }
+        }
 
     //for (i=0; i<LengthOfArray; i++){
     //    printf("\n\t\tLetter %d XY =  %d %d",(i+1),LetterOriginArray[0][i],LetterOriginArray[1][i]);

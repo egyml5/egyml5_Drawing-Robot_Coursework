@@ -83,7 +83,7 @@ int main()
         printf ("Fontsize outside permissable range, Please enter a different value\n");
     }
 
-    printf ("The value you entered for a is %d\n", FontSize);
+    printf ("The value you entered for fontSize is %d\n", FontSize);
     
     //Code to read, convert and store input text and font in a usable format
     ReturnVal1 = F_CountLetters("FontData.txt", &NumberOfASCIICharacters);
@@ -150,7 +150,7 @@ int main()
             return -1;
         }
 
-        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut);
+        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut, NewLineCountIn);
 
         /*
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);

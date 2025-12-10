@@ -60,7 +60,7 @@ int main () {
     }
     */
     
-    ReturnVal5 = F_CountWords("test.txt", &CharacterCount, &WordCount);
+    ReturnVal5 = F_CountWords("test_V2.txt", &CharacterCount, &WordCount);
 
     //loop to read each word and convert to GCode
     //Loop calculation variables
@@ -92,12 +92,14 @@ int main () {
 
     for (k=1;k<=WordCount;k++){
 
-        ReturnVal6 = F_CountSkipCharacters("test.txt", k, &SkipCount);
+        ReturnVal6 = F_CountSkipCharacters("test_V2.txt", k, &SkipCount);
 
-        ReturnVal7 = F_ReadWordToASCIIArray("test.txt", k, &WordArray, SkipCount, &WordCharacterCount);
+        ReturnVal7 = F_ReadWordToASCIIArray("test_V2.txt", k, &WordArray, SkipCount, &WordCharacterCount);
 
         ReturnVal8 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray, WordCharacterCount, FontSize, NewWordStartXY, &NewLineCountIn, &NewLineCountOut);
 
+
+        
         LengthOfWord = WordCharacterCount-NewLineCountIn;
         LetterOriginArray[0] = calloc ( LengthOfWord, sizeof(int));
         if ( LetterOriginArray[0] == NULL){
@@ -110,9 +112,9 @@ int main () {
             return -1;
         }
 
-        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut);
+        ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut, NewLineCountIn);
 
-        /*
+        
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
         printf("\n\t\tNewLineCountIn = %d",NewLineCountIn);
         printf("\n\t\tNewLineCountOut = %d",NewLineCountOut);
@@ -121,10 +123,10 @@ int main () {
             printf(" %d",WordArray[q]);
         }
         for (q=0; q<LengthOfWord; q++){
-        printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCountIn+1),LetterOriginArray[0][q],LetterOriginArray[1][q]);
+        printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCountIn+1),LetterOriginArray[0][q+NewLineCountIn],LetterOriginArray[1][q+NewLineCountIn]);
         }
         printf("\n");
-        */
+        
 
         OldWordEndXY[0] = LetterOriginArray[0][LengthOfWord-1]+FontSize;
         OldWordEndXY[1] = LetterOriginArray[1][LengthOfWord-1];
@@ -161,7 +163,7 @@ int main () {
             }
 
         }
-
+        
     }
 
     printf("\n\nRV1 = %d, RV2 = %d, RV3 = %d, RV4 = %d, RV5 = %d, RV6 = %d, RV7 = %d, RV8 = %d, RV9 = %d\n\n",ReturnVal1,ReturnVal2,ReturnVal3,ReturnVal4,ReturnVal5,ReturnVal6,ReturnVal7,ReturnVal8,ReturnVal9);
