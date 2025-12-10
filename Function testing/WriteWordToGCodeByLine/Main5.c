@@ -97,10 +97,8 @@ int main () {
         ReturnVal7 = F_ReadWordToASCIIArray("test_V2.txt", k, &WordArray, SkipCount, &WordCharacterCount);
 
         ReturnVal8 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray, WordCharacterCount, FontSize, NewWordStartXY, &NewLineCountIn, &NewLineCountOut);
-
-
         
-        LengthOfWord = WordCharacterCount-NewLineCountIn;
+        LengthOfWord = WordCharacterCount;
         LetterOriginArray[0] = calloc ( LengthOfWord, sizeof(int));
         if ( LetterOriginArray[0] == NULL){
             printf ("\nMemory could not be allocated - terminating\n");
@@ -114,19 +112,20 @@ int main () {
 
         ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut, NewLineCountIn);
 
-        
+        /*
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
         printf("\n\t\tNewLineCountIn = %d",NewLineCountIn);
         printf("\n\t\tNewLineCountOut = %d",NewLineCountOut);
+        printf("\n\t\tLengthOfWord = %d",LengthOfWord);
         printf("\n\t\tWordArray =");
         for (q=0;q<WordCharacterCount;q++){
             printf(" %d",WordArray[q]);
         }
-        for (q=0; q<LengthOfWord; q++){
+        for (q=0; q<(LengthOfWord-NewLineCountIn); q++){
         printf("\n\t\tLetter %d XY =  %d %d",(q+NewLineCountIn+1),LetterOriginArray[0][q+NewLineCountIn],LetterOriginArray[1][q+NewLineCountIn]);
         }
         printf("\n");
-        
+        */
 
         OldWordEndXY[0] = LetterOriginArray[0][LengthOfWord-1]+FontSize;
         OldWordEndXY[1] = LetterOriginArray[1][LengthOfWord-1];
