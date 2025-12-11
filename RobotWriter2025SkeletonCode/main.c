@@ -100,7 +100,7 @@ int main()
     }
     */
     
-    ReturnVal5 = F_CountWords("InputText.txt", &CharacterCount, &WordCount);
+    ReturnVal5 = F_CountWords("test_V2.txt", &WordCount);
 
     //loop to read each word and convert to GCode
     //Loop calculation variables
@@ -153,6 +153,7 @@ int main()
         ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut, NewLineCountIn);
 
         /*
+        //Printing values for diagnostic purposes
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
         printf("\n\t\tNewLineCountIn = %d",NewLineCountIn);
         printf("\n\t\tNewLineCountOut = %d",NewLineCountOut);
@@ -170,7 +171,8 @@ int main()
         OldWordEndXY[1] = LetterOriginArray[1][LengthOfWord-1];
         
         OldPen = 0;
-
+        
+        //printing GCode to buffer line by line
         for (i=NewLineCountIn;i<WordCharacterCount;i++){
 
             LetterASCII = WordArray[i];
