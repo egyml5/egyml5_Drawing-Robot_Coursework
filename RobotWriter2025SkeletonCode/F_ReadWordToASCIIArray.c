@@ -213,13 +213,15 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
 
     //printf("\n\t\tNewLineCount = %d",NewLineCount);
 
-    LengthWordArray = LengthWordArray-NewLineCountIn;
+    //LengthWordArray = LengthWordArray-NewLineCountIn;
+    
     
     if(NewLineCountIn>0){
         //printf("\n\t\tSending to new line");
         NewOriginXY[0] = 0;
-        NewOriginXY[1] = OldY-((FontSize+LineGap)*NewLineCountIn);
+        NewOriginXY[1] = OldY-FontSize-LineGap;
     }
+    
 
     if(NewLineCountIn == 0){
         LengthCheck = (FontSize*LengthWordArray)+OldX;
@@ -266,11 +268,15 @@ int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfA
             }
         }
     }
-
+    
     if (NewLineCountIn>0){
+        SpacesCount++;
+    }
+    
+
         for (k=SpacesCount; k<LengthOfArray; k++){
-            LetterOriginArray[0][k-1] = LetterStartX;
-            LetterOriginArray[1][k-1] = LetterStartY;
+            LetterOriginArray[0][k] = LetterStartX;
+            LetterOriginArray[1][k] = LetterStartY;
 
             OverspillCheck = LetterStartX+FontSize;
 
@@ -284,24 +290,6 @@ int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfA
                 LetterStartY = LetterStartY;
             }
         }
-    }
-
-    for (k=SpacesCount; k<LengthOfArray; k++){
-        LetterOriginArray[0][k] = LetterStartX;
-        LetterOriginArray[1][k] = LetterStartY;
-
-        OverspillCheck = LetterStartX+FontSize;
-
-        if (OverspillCheck>=PageWidth){
-            LetterStartX = 0;
-            LetterStartY = LetterStartY-FontSize-LineGap;
-        }
-
-        if (OverspillCheck<PageWidth){
-            LetterStartX = LetterStartX+FontSize;
-            LetterStartY = LetterStartY;
-        }
-    }
 
     //for (i=0; i<LengthOfArray; i++){
     //    printf("\n\t\tLetter %d XY =  %d %d",(i+1),LetterOriginArray[0][i],LetterOriginArray[1][i]);

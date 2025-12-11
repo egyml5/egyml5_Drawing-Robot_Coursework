@@ -100,7 +100,7 @@ int main()
     }
     */
     
-    ReturnVal5 = F_CountWords("test.txt", &CharacterCount, &WordCount);
+    ReturnVal5 = F_CountWords("InputText.txt", &CharacterCount, &WordCount);
 
     //loop to read each word and convert to GCode
     //Loop calculation variables
@@ -132,9 +132,9 @@ int main()
 
     for (k=1;k<=WordCount;k++){
 
-        ReturnVal6 = F_CountSkipCharacters("test.txt", k, &SkipCount);
+        ReturnVal6 = F_CountSkipCharacters("InputText.txt", k, &SkipCount);
 
-        ReturnVal7 = F_ReadWordToASCIIArray("test.txt", k, &WordArray, SkipCount, &WordCharacterCount);
+        ReturnVal7 = F_ReadWordToASCIIArray("InputText.txt", k, &WordArray, SkipCount, &WordCharacterCount);
 
         ReturnVal8 = F_FindWordOrigin(PageWidth, LineGap, OldWordEndXY, WordArray, WordCharacterCount, FontSize, NewWordStartXY, &NewLineCountIn, &NewLineCountOut);
 

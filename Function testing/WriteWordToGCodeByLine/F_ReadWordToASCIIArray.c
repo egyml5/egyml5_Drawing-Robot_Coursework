@@ -3,6 +3,9 @@
 #include "F_ReadWordToASCIIArray.h"
 
 int F_CountSkipCharacters(char* InputText, int Word, int *SkipCount){
+    /*
+    counts the number of characters before the word being read
+    */
 
     int WordCount = 1;
     int TempChar;
@@ -66,7 +69,11 @@ int F_CountSkipCharacters(char* InputText, int Word, int *SkipCount){
     
 }
 
-int F_CountWords(char* InputText, int *CharacterCount, int *WordCount){
+int F_CountWords(char* InputText, int *WordCount){
+    /*
+    opens the input text file and counts the number of words. A word is defined as some text (not ASCII 32 or 10)
+    bookended by a space, newline, start of file or end of file
+    */
 
     int NumberOfCharacters = 0;
     int NumberOfWords = 0;
@@ -107,13 +114,16 @@ int F_CountWords(char* InputText, int *CharacterCount, int *WordCount){
 
     fclose(fptr);
     
-    *CharacterCount = NumberOfCharacters;
     *WordCount = NumberOfWords;
 
     return 0;
 }
 
 int F_ReadWordToASCIIArray(char* InputText, int Word, int **WordArray, int SkipCount, int *WordCharacterCount){
+    /*
+    Function opens the input text file and skips over the characters before the word.
+    It then reads each character of the word into an array
+    */
 
     int EndCheck;
     char TempChar;
@@ -182,9 +192,6 @@ int F_ReadWordToASCIIArray(char* InputText, int Word, int **WordArray, int SkipC
     }
 
     //printf("\n\t\tASCIIArray =");
-    //for (i=0;i<CharacterCount;i++){
-    //    printf(" %d",ASCIIArray[i]);
-    //}
 
     *WordArray = ASCIIArray;
     *WordCharacterCount = CharacterCount;
@@ -193,6 +200,10 @@ int F_ReadWordToASCIIArray(char* InputText, int Word, int **WordArray, int SkipC
 }
 
 int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArray, int LengthWordArray, int FontSize, int* NewXY, int *PtrNewLineCountIn, int *PtrNewLineCountOut){
+    /*
+    Function decides where the word origin is. If the word starts with a newline (ASCII 10) it send the word to a newline.
+    If not it checks if the word will overspill the page and if so sends it to a new line. If not it sets NewXY = OldWordEndXY
+    */
 
     int NewOriginXY[2] = {0};
     int OldX = OldWordEndXY[0];
@@ -212,14 +223,11 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
     }
 
     //printf("\n\t\tNewLineCount = %d",NewLineCount);
-
-    //LengthWordArray = LengthWordArray-NewLineCountIn;
-    
     
     if(NewLineCountIn>0){
         //printf("\n\t\tSending to new line");
         NewOriginXY[0] = 0;
-        NewOriginXY[1] = OldY-FontSize-LineGap;
+        NewOriginXY[1] = OldY-((FontSize+LineGap)*NewLineCountIn);
     }
     
 
@@ -227,11 +235,17 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
         LengthCheck = (FontSize*LengthWordArray)+OldX;
         //printf("\n\t\tLengthCheck = %d",LengthCheck);
 
-        if (LengthCheck>100){
+        if (LengthCheck>100 && OldX>0){
             //printf("\n\t\tSending to new line");
             NewOriginXY[0] = 0;
             NewOriginXY[1] = OldY-FontSize-LineGap;
             NewLineCountOut++;
+        }
+
+        if (LengthCheck>100 && OldX==0){
+            //printf("\n\t\tSending to new line");
+            NewOriginXY[0] = OldX;
+            NewOriginXY[1] = OldY;
         }
 
         if (LengthCheck<=100){
@@ -253,6 +267,9 @@ int F_FindWordOrigin(int PageWidth, int LineGap, int* OldWordEndXY, int* WordArr
 }
 
 int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfArray, int FontSize, int* NewWordStartXY, int *LetterOriginArray[], int NewLineCountOut, int NewLineCountIn){
+    /*
+    Makes an array containing the X and Y for the origin of each letter in the word
+    */
 
     int i;
     int k;
@@ -269,10 +286,7 @@ int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfA
         }
     }
     
-    if (NewLineCountIn>0){
-        SpacesCount++;
-    }
-    
+        SpacesCount = SpacesCount+NewLineCountIn;
 
         for (k=SpacesCount; k<LengthOfArray; k++){
             LetterOriginArray[0][k] = LetterStartX;
@@ -294,36 +308,6 @@ int F_FindLetterOrigin(int PageWidth, int LineGap, int* WordArray, int LengthOfA
     //for (i=0; i<LengthOfArray; i++){
     //    printf("\n\t\tLetter %d XY =  %d %d",(i+1),LetterOriginArray[0][i],LetterOriginArray[1][i]);
     //}
-
-    return 0;
-}
-
-int F_FindLengthGCodeArray(int *WordArray, int *ptrGCodeArrayLength, Characters *CharacterArray, int WordCharacterCount, int NewLineCount){
-
-    int i;
-    int q;
-    int k;
-    int GCodeArraylength = 0;
-    int OldPen = 0;
-    int *PenArray;
-    int LetterASCII;
-
-    for (i=NewLineCount;i<WordCharacterCount;i++){
-        LetterASCII = WordArray[i];
-
-        GCodeArraylength = GCodeArraylength + CharacterArray[LetterASCII].length;
-        PenArray = CharacterArray[LetterASCII].Pen;
-
-        for (q=0;q<CharacterArray[LetterASCII].length;q++){
-            if(PenArray[q] != OldPen){
-                GCodeArraylength++;
-            }
-            OldPen = PenArray[q];
-        }
-
-    }
-
-    *ptrGCodeArrayLength = GCodeArraylength;
 
     return 0;
 }

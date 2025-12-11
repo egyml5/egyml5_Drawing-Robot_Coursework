@@ -4,6 +4,10 @@
 #include "F_FontDataToStruct.h"
 
 int F_CountLetters(char* FontData, int *count){
+    /*
+    Function is sent the name of the font data text file. It opens the file and counts how many characters the file has data for.
+    It then sends this number to the pointer “count”
+    */
 
     int check;
     int ascii;
@@ -35,6 +39,11 @@ int F_CountLetters(char* FontData, int *count){
             NumberOfCharacters++;
         }
 
+        if (check != 999){
+            printf("\nFont data incorrectly formatted");
+            return -1;
+        }
+
         for (i=1; i<=length; i++){
             EndCheck = fscanf (fInput, "%d %d %d", &ignore, &ignore, &ignore);
 
@@ -53,12 +62,18 @@ int F_CountLetters(char* FontData, int *count){
     return 0;
 }
 
-int F_FontDataToStruct(char* FontData, Characters **ReturnArray, int *count){
+int F_FontDataToStruct(char* FontData, Characters **ReturnArray, int count){
+    /*
+    Function is sent the name of the font data text file and the number of characters “count”.
+    It reads the font data for each character into X position, Y position and Pen position arrays and stores
+    these arrays in a struct with the length of the arrays “length” and the ASCII code for each character “ascii”.
+    These structs are then put in an array and sent to the **ReturnArray
+    */
 
     int check = 0;
     int ascii = 0;
     int length = 0;
-    int NumberOfCharacters = *count;
+    int NumberOfCharacters = count;
     int i;
     int ii;
     struct Characters *CharacterArray;
@@ -134,6 +149,9 @@ int F_FontDataToStruct(char* FontData, Characters **ReturnArray, int *count){
 }
 
 int F_ResizeStructs(int FontSize, Characters Character){
+    /*
+    Function resizes the font data for the character it is sent
+    */
 
     int i;
     int length;
@@ -165,6 +183,10 @@ int F_ResizeStructs(int FontSize, Characters Character){
 }
 
 int F_DisplayCharacter(Characters Character){
+    /*
+    Funtion to print the data in a struct for diagnostic purposes
+    */
+
      int i;
      char name = Character.ascii;
      printf("\n\t\t ascii int = %d ", Character.ascii);

@@ -1,0 +1,91 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:145.0) Gecko/20100101 Firefox/145.0" version="29.2.7">
+  <diagram name="Page-1" id="0zCpNAYhgOXjFgbcyMNN">
+    <mxGraphModel dx="1426" dy="778" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-11" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-1" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="F_ReadWordToASCIIArray" vertex="1">
+          <mxGeometry height="60" width="196" x="312" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-2" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Open input text file" vertex="1">
+          <mxGeometry height="60" width="120" x="350" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-4" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-13" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-5" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Can file be read?" vertex="1">
+          <mxGeometry height="80" width="116" x="352" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-6" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Print error" vertex="1">
+          <mxGeometry height="60" width="120" x="546" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Return -1" vertex="1">
+          <mxGeometry height="60" width="120" x="546" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="No" vertex="1">
+          <mxGeometry height="30" width="60" x="470" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Yes" vertex="1">
+          <mxGeometry height="30" width="60" x="400" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-15" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Skip skip letters" vertex="1">
+          <mxGeometry height="60" width="120" x="350" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-17" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Count how many characters in word" vertex="1">
+          <mxGeometry height="60" width="120" x="350" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-19" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Allocate memory for word array" vertex="1">
+          <mxGeometry height="60" width="120" x="350" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-23" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-25" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-18" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Can memory be allocated" vertex="1">
+          <mxGeometry height="80" width="130" x="345" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-20" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Print error" vertex="1">
+          <mxGeometry height="60" width="120" x="520" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Return -1" vertex="1">
+          <mxGeometry height="60" width="120" x="520" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-27" edge="1" parent="1" source="ZXtVMPeeCDFPuI1BAXmh-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="ZXtVMPeeCDFPuI1BAXmh-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Read letters into word array" vertex="1">
+          <mxGeometry height="60" width="120" x="350" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="ZXtVMPeeCDFPuI1BAXmh-26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Return 0" vertex="1">
+          <mxGeometry height="60" width="120" x="350" y="950" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -15,7 +15,6 @@ int main () {
     //Calculation variables
     Characters *CharacterArray;
     int NumberOfASCIICharacters;
-    int CharacterCount;
     int WordCount;
 
     //Loop Variables
@@ -33,6 +32,7 @@ int main () {
     int ReturnVal8 = 0;
     int ReturnVal9 = 0;
 
+    //Promptig user to enter the font size
     while (1){
         printf ("Please enter a fontsize between 4 and 10\n");
         scanf ("%d",&FontSize);
@@ -48,19 +48,20 @@ int main () {
     //Code to read, convert and store input text and font in a usable format
     ReturnVal1 = F_CountLetters("FontData.txt", &NumberOfASCIICharacters);
 
-    ReturnVal2 = F_FontDataToStruct("FontData.txt", &CharacterArray, &NumberOfASCIICharacters);
+    ReturnVal2 = F_FontDataToStruct("FontData.txt", &CharacterArray, NumberOfASCIICharacters);
 
     for(i=0; i<NumberOfASCIICharacters; i++){
         ReturnVal3 = F_ResizeStructs(FontSize, CharacterArray[i]);
     }
 
     /*
+    //Function for diagnostic purposes to check function 2 and 3 work
     for(i=0; i<NumberOfASCIICharacters; i++){
         ReturnVal4 = F_DisplayCharacter(CharacterArray[i]);
     }
     */
     
-    ReturnVal5 = F_CountWords("test_V2.txt", &CharacterCount, &WordCount);
+    ReturnVal5 = F_CountWords("test_V2.txt", &WordCount);
 
     //loop to read each word and convert to GCode
     //Loop calculation variables
@@ -113,6 +114,7 @@ int main () {
         ReturnVal9 = F_FindLetterOrigin(PageWidth, LineGap, WordArray, LengthOfWord, FontSize, NewWordStartXY, LetterOriginArray, NewLineCountOut, NewLineCountIn);
 
         /*
+        //Printing values for diagnostic purposes
         printf("\n\t\tNew Word Origin XY = %d %d",NewWordStartXY[0],NewWordStartXY[1]);
         printf("\n\t\tNewLineCountIn = %d",NewLineCountIn);
         printf("\n\t\tNewLineCountOut = %d",NewLineCountOut);
@@ -132,6 +134,7 @@ int main () {
         
         OldPen = 0;
 
+        //printing GCode to buffer line by line
         for (i=NewLineCountIn;i<WordCharacterCount;i++){
 
             LetterASCII = WordArray[i];
@@ -141,7 +144,6 @@ int main () {
             YArray = CharacterArray[LetterASCII].Ypos;
             PenArray = CharacterArray[LetterASCII].Pen;
 
-            // finds the length of each element of the jagged GCode array
             for(q=0;q<LetterLength;q++){
                 if(PenArray[q] > OldPen){
                     printf("S1000\n");
@@ -165,6 +167,7 @@ int main () {
         
     }
 
+    //prints the return values to check all functions were called properly
     printf("\n\nRV1 = %d, RV2 = %d, RV3 = %d, RV4 = %d, RV5 = %d, RV6 = %d, RV7 = %d, RV8 = %d, RV9 = %d\n\n",ReturnVal1,ReturnVal2,ReturnVal3,ReturnVal4,ReturnVal5,ReturnVal6,ReturnVal7,ReturnVal8,ReturnVal9);
 
     return 0;
